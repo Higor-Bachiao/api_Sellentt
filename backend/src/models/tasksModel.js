@@ -5,6 +5,11 @@ const getAll = async () => {
     return tasks;
 };
 
+const getById = async (id) => {
+    const [task] = await connection.execute('SELECT * FROM tasks WHERE id = ?', [id]);
+    return task[0];
+};
+
 const createTask = async (task) =>{
     const { title } = task;
     const query = 'INSERT INTO tasks (title, status, created_at) VALUES (?, ?, NOW())';
@@ -28,8 +33,11 @@ const updateTask = async (id, task) => {
     return updatedTask;
 };
 
+
+
 module.exports = {
     getAll,
+    getById,
     createTask,
     deleteTask,
     updateTask,
